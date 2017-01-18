@@ -14,7 +14,7 @@ import javax.servlet.http.HttpServletRequest;
  * Created by dingxin on 16/12/12.
  */
 @Controller
-@RequestMapping(value = "/")
+@RequestMapping(value = {"","/"})
 public class FatekingController extends FatekingBaseController{
 
 
@@ -26,10 +26,16 @@ public class FatekingController extends FatekingBaseController{
      * @return
      */
     @ResponseBody
-    @RequestMapping(value = { "test"}, method = { RequestMethod.GET })
-    public Json index(HttpServletRequest request) {
+    @RequestMapping(value = { "/test"}, method = { RequestMethod.GET })
+    public Json test(HttpServletRequest request) {
         logger.debug("TestController:/test");
         return ok("It's OK now!");
+    }
+
+    @RequestMapping(value = { "/", ""})
+    public String index(HttpServletRequest request) {
+        logger.debug("Index");
+        return "index";
     }
 
 
