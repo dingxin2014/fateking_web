@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+
+       <bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSource" init-method="init">
+            <property name="driverClassName" value="com.mysql.jdbc.Driver"/>
+            <property name="url" value="jdbc:mysql://121.41.40.133:3306/blog?useUnicode=true&amp;characterEncoding=UTF-8"/>
+            <property name="username" value="dingxin"/>
+            <property name="password" value="234811"/>
+              
+            <!-- 配置初始化大小、最小、最大 -->
+			<property name="initialSize" value="${druid.pool.initialSize}" />
+			<property name="minIdle" value="${druid.pool.minIdle}" />
+			<property name="maxActive" value="${druid.pool.maxActive}" />
+	
+			<!-- 配置获取连接等待超时的时间 -->
+			<property name="maxWait" value="${druid.pool.maxWait}" />
+	
+			<!-- 配置间隔多久才进行一次检测，检测需要关闭的空闲连接，单位是毫秒 -->
+			<property name="timeBetweenEvictionRunsMillis" value="${druid.pool.timeBetweenEvictionRunsMillis}" />
+	
+			<!-- 配置一个连接在池中最小生存的时间，单位是毫秒 -->
+			<property name="minEvictableIdleTimeMillis" value="${druid.pool.minEvictableIdleTimeMillis}" />
+	
+			<property name="validationQuery" value="${druid.pool.validationQuery}" />
+			<property name="testWhileIdle" value="${druid.pool.testWhileIdle}" />
+			<property name="testOnBorrow" value="${druid.pool.testOnBorrow}" />
+			<property name="testOnReturn" value="${druid.pool.testOnReturn}" />
+	
+			<!-- 打开PSCache，并且指定每个连接上PSCache的大小 -->
+			<property name="poolPreparedStatements" value="${druid.pool.poolPreparedStatements}" />
+			<property name="maxPoolPreparedStatementPerConnectionSize" value="${druid.pool.maxPoolPreparedStatementPerConnectionSize}" />
+	
+			<!-- 配置监控统计拦截的filters -->
+			<property name="filters" value="logback" />
+			
+			<property name="proxyFilters">
+				<list>
+					<ref bean="stat-filter" />
+					<ref bean="wall-filter" />
+				</list>
+			</property>
+       </bean>
+
+		<!-- sql执行统计 -->
+		<bean id="stat-filter" class="com.alibaba.druid.filter.stat.StatFilter">
+			<property name="slowSqlMillis" value="${druid.pool.slowSqlMillis}" />
+			<property name="logSlowSql" value="${druid.pool.logSlowSql}" />
+			<property name="mergeSql" value="${druid.pool.mergeSql}" />
+		</bean>
+		
+		<!-- sql注入攻击防火墙 -->
+	    <bean id="wall-filter" class="com.alibaba.druid.wall.WallFilter">
+	        <property name="dbType" value="mysql" />
+	        <property name="config" ref="wall-filter-config" />
+	        <property name="throwException" value="false"></property>
+	        <property name="logViolation" value="false"></property>
+	    </bean>
+	    
+	   <bean id="wall-filter-config" class="com.alibaba.druid.wall.WallConfig" init-method="init">
+       	    <property name="dir" value="META-INF/druid/wall/mysql" />
+       </bean>
+	   <!-- 配置druid监控spring jdbc -->
+	   <bean id="druid-stat-interceptor" class="com.alibaba.druid.support.spring.stat.DruidStatInterceptor"/>
+	
+       <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+              <property name="dataSource" ref="dataSource"/>
+              <property name="configLocation" value="classpath:mybatis/mybatis-conf.xml"/>
+              <property name="mapperLocations" value="classpath:mybatis/*.xml"/>
+       </bean>
+
+       <bean id="mapperScannerConfigurer"  class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+              <property name="basePackage" value="com.fateking.**.dao" />
+              <property name="sqlSessionFactoryBeanName" value="sqlSessionFactory" />
+       </bean>
+</beans>
