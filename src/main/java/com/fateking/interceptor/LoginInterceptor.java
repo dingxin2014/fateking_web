@@ -22,13 +22,13 @@ public class LoginInterceptor extends HandlerInterceptorAdapter implements Globa
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
-        User user = getUser(request);
-        if(user == null){
-            //TODO
-            response.sendRedirect("/login");
-            return false;
-        }
-        setCurrentUser(user);
+//        User user = getUser(request);
+//        if(user == null){
+//            //TODO
+//            response.sendRedirect("/login");
+//            return false;
+//        }
+//        setCurrentUser(user);
 
         return true;
     }

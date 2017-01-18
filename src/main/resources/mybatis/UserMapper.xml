@@ -4,13 +4,13 @@
 
 	<select id="findUserByUserNameAndPass" parameterType="java.util.Map" resultType="com.fateking.model.User">
 		SELECT *
-		FROM T_USER
+		FROM T_FATE_USER
 		WHERE userName = #{userName} AND password = #{password}
 	</select>
 
 	<select id="findUserByMd5" parameterType="java.lang.String" resultType="com.fateking.model.User">
 		SELECT *
-		FROM T_USER
+		FROM T_FATE_USER
 		WHERE md5 = #{md5} 
 	</select>
 

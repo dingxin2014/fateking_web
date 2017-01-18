@@ -6,9 +6,9 @@
 
        <bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSource" init-method="init">
             <property name="driverClassName" value="com.mysql.jdbc.Driver"/>
-            <property name="url" value="jdbc:mysql://121.41.40.133:3306/blog?useUnicode=true&amp;characterEncoding=UTF-8"/>
-            <property name="username" value="dingxin"/>
-            <property name="password" value="ipwd"/>
+            <property name="url" value="jdbc:mysql://112.74.22.152:3306/FateKing?useUnicode=true&amp;characterEncoding=UTF-8"/>
+            <property name="username" value="root"/>
+            <property name="password" value="123456"/>
               
             <!-- 配置初始化大小、最小、最大 -->
 			<property name="initialSize" value="${druid.pool.initialSize}" />
@@ -68,7 +68,7 @@
        <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
               <property name="dataSource" ref="dataSource"/>
               <property name="configLocation" value="classpath:mybatis/mybatis-conf.xml"/>
-              <property name="mapperLocations" value="classpath:mybatis/*.xml"/>
+           <property name="mapperLocations" value="classpath:mybatis/*Mapper.xml"/>
        </bean>
 
        <bean id="mapperScannerConfigurer"  class="org.mybatis.spring.mapper.MapperScannerConfigurer">

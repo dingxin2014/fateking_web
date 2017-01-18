@@ -6,4 +6,6 @@ package com.fateking.model;
 public class User {
 
     private int id;
+
+
 }

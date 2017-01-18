@@ -10,15 +10,21 @@
         http://www.springframework.org/schema/context
         http://www.springframework.org/schema/context/spring-context.xsd">
 
+    <context:annotation-config />
+
     <import resource="mvc-view-config.xml"/>
 
 	<bean class="org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter" />
-    
+
 <!--     <mvc:default-servlet-handler/> -->
-    
-    <context:component-scan base-package="com.fateking.*.controller">
+
+    <!-- 设置使用注解的类所在的包路径 -->
+    <context:component-scan base-package="com.fateking.**.controller" use-default-filters="false">
+        <context:include-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
+        <context:exclude-filter type="annotation" expression="org.springframework.stereotype.Service"/>
     </context:component-scan>
-    
+
+
     <mvc:annotation-driven>
         <mvc:message-converters register-defaults="true">
             <bean class="org.springframework.http.converter.StringHttpMessageConverter">
