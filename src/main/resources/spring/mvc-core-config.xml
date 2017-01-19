@@ -64,4 +64,5 @@
     <mvc:resources mapping="/js/**" location="pages/js/"/>
     <mvc:resources mapping="/css/**" location="pages/css/"/>
     <mvc:resources mapping="/fonts/icomoon/**" location="pages/fonts/icomoon/"/>
+    <mvc:resources mapping="/pages/**" location="pages/"/>
     </beans>

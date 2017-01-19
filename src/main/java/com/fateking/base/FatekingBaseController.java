@@ -2,6 +2,7 @@ package com.fateking.base;
 
 import com.alibaba.fastjson.JSONObject;
 import com.fateking.config.Configuration;
+import com.fateking.exception.FatekingException;
 import com.fateking.model.User;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -117,6 +118,13 @@ public abstract class FatekingBaseController implements Global{
     @ResponseBody
     public Json illegalArgumentException(IllegalArgumentException ex) {
         logger.error("IllegalArgumentException => "+ex.getMessage(), ex);
+        return fail(ex.getMessage());
+    }
+
+    @ExceptionHandler(FatekingException.class)
+    @ResponseBody
+    public Json fatekingException(FatekingException ex){
+        logger.error("fatekingException => "+ex.getMessage(), ex);
         return fail(ex.getMessage());
     }
 
